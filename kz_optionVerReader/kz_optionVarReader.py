@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""OptionVarReader.py
+"""kz_optionVarReader.py
 
 git:https://github.com/kazinos/kz_MayaTools.git
 
