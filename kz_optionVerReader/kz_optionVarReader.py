@@ -62,7 +62,7 @@ def deleteItem():
     
     # 確認ダイアログ表示
     selItem = cmds.textScrollList("optionVerList" ,q=True ,selectItem=True)[0]
-    checklog = cmds.confirmDialog( title=u'確認' 
+    checklog = cmds.confirmDialog( title=u'check' 
                                 ,message='Do you want to delete optionVar?\n{}'.format(selItem)
                                 ,button=['Yes','No'] 
                                 ,defaultButton='Yes' 
