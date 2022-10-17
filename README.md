@@ -38,3 +38,38 @@ You could open userPrefs.mel to check, but that would open a deep folder hierarc
 
 This tool was inspired by such concerns.
 I hope it will help someone else to create a tool.
+
+---
+
+#### kz_globalVerReader.py
+https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-becb-478848049457.mp4
+
+
+
+[jp]
+
+##### グローバル変数の一覧作成および削除ツール
+
+ツール作成の効率化の為に作成しました。
+以外に何が保存されているのか把握しきれていないグローバル変数の中身が気になり制作しました。
+・ウインドウの名前
+・プリファレンスの設定値
+・各種項目のステータス　等
+探そうと思うとmelを開いて変数名を探し出してプリントして…と手間ですが、欲しい情報を検索すれば検索の時短になるかと思います。
+
+情報の検索、勉強のお供など、
+誰かのツール作成の手伝いになれば幸いです。
+
+[en]
+
+##### global variable listing tool
+
+Created to improve the efficiency of tool creation.
+I created it because I was concerned about the contents of global variables, which I could not fully grasp what is stored in other than the following.
+Window name
+Preference values
+The status of various items, etc.
+When I want to search, I have to open mel, find the variable name, and print it out... It is time-consuming, but if I search for the information I want, I think it will shorten the time for searching.
+
+Searching for information, study, etc.
+I would be happy if I can help someone to create a tool.
