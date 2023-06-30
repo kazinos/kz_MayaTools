@@ -8,6 +8,7 @@ MayaVer Maya2020.4
 2022/08/18 kazinos 制作開始
 2022/08/22 kazinos make git repository and commit.
 2023/06/30 kazinos Change format to linter.
+                   Add prefix to UI name and method name.
 
 issue:
 
@@ -25,39 +26,39 @@ from maya import cmds
 import re
 
 
-def selectListItem():
+def OVR_selectListItem():
     """optionVar選択時の処理
     """
-    selItem = cmds.textScrollList("optionVerList", q=True, selectItem=True)[0]
+    selItem = cmds.textScrollList("OVR_optionVerList", q=True, selectItem=True)[0]
     selInfo = cmds.optionVar(q=selItem)
 
     # 変数名 表示処理
-    cmds.textField("optionVerName", e=True, text=selItem)
+    cmds.textField("OVR_optionVerName", e=True, text=selItem)
 
     # 値 表示処理
     if type(selInfo) == list:
-        cmds.textScrollList("selOptionVerInfo", e=True, removeAll=True,
+        cmds.textScrollList("OVR_selOptionVerInfo", e=True, removeAll=True,
                             append="{}".format(selInfo))
         return
 
-    cmds.textScrollList("selOptionVerInfo", e=True, removeAll=True, append=[selInfo])
+    cmds.textScrollList("OVR_selOptionVerInfo", e=True, removeAll=True, append=[selInfo])
 
 
-def deleteItem():
+def OVR_deleteItem():
     """選択対象のoptionVarの削除処理
     """
     # 選択されていない場合：return
-    if cmds.textScrollList("optionVerList", q=True, numberOfSelectedItems=True) == 0:
+    if cmds.textScrollList("OVR_optionVerList", q=True, numberOfSelectedItems=True) == 0:
         return
 
     # 選択物がoptionVar内に存在していない場合：return
-    if not cmds.optionVar(exists=cmds.textScrollList("optionVerList", q=True, selectItem=True)[0]):
-        cmds.textScrollList("selOptionVerInfo", e=True, removeAll=True,
+    if not cmds.optionVar(exists=cmds.textScrollList("OVR_optionVerList", q=True, selectItem=True)[0]):
+        cmds.textScrollList("OVR_selOptionVerInfo", e=True, removeAll=True,
                             append=u"Selection was not found in OptionVar.\nPlease refresh the list.")
         return
 
     # 確認ダイアログ表示
-    selItem = cmds.textScrollList("optionVerList", q=True, selectItem=True)[0]
+    selItem = cmds.textScrollList("OVR_optionVerList", q=True, selectItem=True)[0]
     checklog = cmds.confirmDialog(title=u'check',
                                   message='Do you want to delete optionVar?\n{}'.format(selItem),
                                   button=['Yes', 'No'],
@@ -68,53 +69,53 @@ def deleteItem():
     # 削除処理
     if checklog == "Yes":
         cmds.optionVar(remove=selItem)
-        makeList()
-        cmds.textField("optionVerName", e=True, text=u"")
-        cmds.textScrollList("selOptionVerInfo", e=True, removeAll=True, append=u"")
+        OVR_makeList()
+        cmds.textField("OVR_optionVerName", e=True, text=u"")
+        cmds.textScrollList("OVR_selOptionVerInfo", e=True, removeAll=True, append=u"")
 
 
-def makeList():
+def OVR_makeList():
     """optionVar一覧作成処理
     """
-    optionVerList = cmds.optionVar(list=True)
-    findType = cmds.optionMenu("findType", q=True, value=True)
-    findText = cmds.textField("searchField", q=True, text=True)
+    OVR_optionVerList = cmds.optionVar(list=True)
+    OVR_findType = cmds.optionMenu("OVR_findType", q=True, value=True)
+    findText = cmds.textField("OVR_searchField", q=True, text=True)
 
     # 正規表現 "+", "*", "\" のみの場合のエラー回避処理
     if findText in ["+", "*", "\\"]:
-        cmds.textScrollList("selOptionVerInfo", e=True, removeAll=True,
+        cmds.textScrollList("OVR_selOptionVerInfo", e=True, removeAll=True,
                             append=u'The +, *, and \\ are special characters.\nThey cannot be used by using them alone.')
         return
 
     # データ型の設定
     seltype = ""
-    if not findType == "All":
-        if findType == "string Value":
+    if not OVR_findType == "All":
+        if OVR_findType == "string Value":
             seltype = unicode
-        if findType == "int Value":
+        if OVR_findType == "int Value":
             seltype = int
-        if findType == "float Value":
+        if OVR_findType == "float Value":
             seltype = float
-        if findType == "List Value":
+        if OVR_findType == "List Value":
             seltype = list
 
     tmpList = []
-    for tmp in optionVerList:
+    for tmp in OVR_optionVerList:
         # 検索での絞り込み
         if not re.search(r"{}".format(findText), tmp):
             continue
         tmpValue = cmds.optionVar(q=tmp)
 
         # typeでの絞り込み
-        if not findType == "All" and not type(tmpValue) == seltype:
+        if not OVR_findType == "All" and not type(tmpValue) == seltype:
             continue
         tmpList.append(tmp)
-    optionVerList = tmpList
-    cmds.textScrollList("optionVerList", e=True, append=optionVerList, removeAll=True)
+    OVR_optionVerList = tmpList
+    cmds.textScrollList("OVR_optionVerList", e=True, append=OVR_optionVerList, removeAll=True)
 
 
 # UI設定----------------------------------------------
-def makeUI():
+def OVR_makeUI():
     winName = "OptionVarReader"
     # ウィンドウが重複した場合の処理
     if cmds.window(winName, q=True, ex=True, resizeToFitChildren=True):
@@ -125,14 +126,14 @@ def makeUI():
                          s=True, mxb=False, mnb=False)
 
     # レイアウト formLayout Ver
-    cmds.formLayout("form", numberOfDivisions=100)
-    cmds.text("titleText", label=u"optionVar List", w=100, h=20)
-    cmds.button("makeListBtn", label=u'Create List', w=100, h=30,
-                command=lambda *args: makeList())
+    cmds.formLayout("OVR_form", numberOfDivisions=100)
+    cmds.text("OVR_titleText", label=u"optionVar List", w=100, h=20)
+    cmds.button("OVR_makeListBtn", label=u'Create List', w=100, h=30,
+                command=lambda *args: OVR_makeList())
 
     # 左側
     # 絞り込み
-    cmds.optionMenu("findType", label='Find Type', w=220)
+    cmds.optionMenu("OVR_findType", label='Find Type', w=220)
     cmds.menuItem(label='All')
     cmds.menuItem(label='string Value')
     cmds.menuItem(label='int Value')
@@ -140,68 +141,68 @@ def makeUI():
     cmds.menuItem(label='List Value')
 
     # 検索
-    cmds.text("searchTitle", label="search", w=56)
-    cmds.textField("searchField", text="", w=116)
-    cmds.button("clearSearchField", label="clear", h=20,
-                c='cmds.textField("searchField", e=True, text="")')
+    cmds.text("OVR_searchTitle", label="search", w=56)
+    cmds.textField("OVR_searchField", text="", w=116)
+    cmds.button("OVR_clearsearchField", label="clear", h=20,
+                c='cmds.textField("OVR_searchField", e=True, text="")')
 
     # optionVar一覧
-    cmds.textScrollList("optionVerList", w=220,
+    cmds.textScrollList("OVR_optionVerList", w=220,
                         allowMultiSelection=False,
                         append=[u"Please make a list"],
-                        selectCommand=lambda *args: selectListItem())
+                        selectCommand=lambda *args: OVR_selectListItem())
 
     # 削除ボタン
-    cmds.button("deleleButton", label="Delete", w=220, c=lambda *args: deleteItem())
+    cmds.button("OVR_deleleButton", label="Delete", w=220, c=lambda *args: OVR_deleteItem())
 
     # 右側
     # 選択optionVarの名前
-    cmds.textField("optionVerName", h=48, text=u"OptionVar Name")
+    cmds.textField("OVR_optionVerName", h=48, text=u"OptionVar Name")
 
     # 選択optionVarの内容
-    cmds.textScrollList("selOptionVerInfo", allowMultiSelection=True,
+    cmds.textScrollList("OVR_selOptionVerInfo", allowMultiSelection=True,
                         append=[u"Infomation"])
 
     # 基準点と配置の設定
-    cmds.formLayout("form", e=True,
-                    attachForm=[("titleText", 'top', 5),
-                                ("titleText", 'left', 5),
-                                ("titleText", 'right', 5),
-                                ("makeListBtn", 'top', 5),
-                                ("makeListBtn", 'left', 5),
-                                ("makeListBtn", 'right', 5),
-                                ("findType", 'top', 5),
-                                ("findType", 'top', 5),
-                                ("findType", 'left', 5),
-                                ("searchTitle", 'top', 5),
-                                ("searchTitle", 'left', 5),
-                                ("searchField", 'top', 5),
-                                ("searchField", 'left', 5),
-                                ("clearSearchField", 'top', 5),
-                                ("clearSearchField", 'left', 5),
-                                ("optionVerList", 'top', 5),
-                                ("optionVerList", 'left', 5),
-                                ("deleleButton", 'left', 5),
-                                ("deleleButton", 'bottom', 5),
-                                ("optionVerName", 'top', 5),
-                                ("optionVerName", 'right', 5),
-                                ("selOptionVerInfo", 'top', 5),
-                                ("selOptionVerInfo", 'bottom', 5),
-                                ("selOptionVerInfo", 'right', 5)],
-                    attachControl=[("makeListBtn", 'top', 5, "titleText"),
-                                   ("makeListBtn", 'top', 5, "titleText"),
-                                   ("findType", 'top', 5, "makeListBtn"),
-                                   ("searchTitle", 'top', 5, "findType"),
-                                   ("searchField", 'top', 5, "findType"),
-                                   ("searchField", 'left', 5, "searchTitle"),
-                                   ("clearSearchField", 'top', 5, "findType"),
-                                   ("clearSearchField", 'left', 5, "searchField"),
-                                   ("optionVerList", 'top', 5, "searchField"),
-                                   ("optionVerList", 'bottom', 5, "deleleButton"),
-                                   ("optionVerName", 'top', 5, "makeListBtn"),
-                                   ("optionVerName", 'left', 5, "findType"),
-                                   ("selOptionVerInfo", 'top', 5, "optionVerName"),
-                                   ("selOptionVerInfo", 'left', 5, "optionVerList"),
+    cmds.formLayout("OVR_form", e=True,
+                    attachForm=[("OVR_titleText", 'top', 5),
+                                ("OVR_titleText", 'left', 5),
+                                ("OVR_titleText", 'right', 5),
+                                ("OVR_makeListBtn", 'top', 5),
+                                ("OVR_makeListBtn", 'left', 5),
+                                ("OVR_makeListBtn", 'right', 5),
+                                ("OVR_findType", 'top', 5),
+                                ("OVR_findType", 'top', 5),
+                                ("OVR_findType", 'left', 5),
+                                ("OVR_searchTitle", 'top', 5),
+                                ("OVR_searchTitle", 'left', 5),
+                                ("OVR_searchField", 'top', 5),
+                                ("OVR_searchField", 'left', 5),
+                                ("OVR_clearsearchField", 'top', 5),
+                                ("OVR_clearsearchField", 'left', 5),
+                                ("OVR_optionVerList", 'top', 5),
+                                ("OVR_optionVerList", 'left', 5),
+                                ("OVR_deleleButton", 'left', 5),
+                                ("OVR_deleleButton", 'bottom', 5),
+                                ("OVR_optionVerName", 'top', 5),
+                                ("OVR_optionVerName", 'right', 5),
+                                ("OVR_selOptionVerInfo", 'top', 5),
+                                ("OVR_selOptionVerInfo", 'bottom', 5),
+                                ("OVR_selOptionVerInfo", 'right', 5)],
+                    attachControl=[("OVR_makeListBtn", 'top', 5, "OVR_titleText"),
+                                   ("OVR_makeListBtn", 'top', 5, "OVR_titleText"),
+                                   ("OVR_findType", 'top', 5, "OVR_makeListBtn"),
+                                   ("OVR_searchTitle", 'top', 5, "OVR_findType"),
+                                   ("OVR_searchField", 'top', 5, "OVR_findType"),
+                                   ("OVR_searchField", 'left', 5, "OVR_searchTitle"),
+                                   ("OVR_clearsearchField", 'top', 5, "OVR_findType"),
+                                   ("OVR_clearsearchField", 'left', 5, "OVR_searchField"),
+                                   ("OVR_optionVerList", 'top', 5, "OVR_searchField"),
+                                   ("OVR_optionVerList", 'bottom', 5, "OVR_deleleButton"),
+                                   ("OVR_optionVerName", 'top', 5, "OVR_makeListBtn"),
+                                   ("OVR_optionVerName", 'left', 5, "OVR_findType"),
+                                   ("OVR_selOptionVerInfo", 'top', 5, "OVR_optionVerName"),
+                                   ("OVR_selOptionVerInfo", 'left', 5, "OVR_optionVerList"),
                                    ])
     cmds.showWindow(window)
     cmds.window(winName, e=True, widthHeight=(400, 300), sizeable=True)
@@ -212,4 +213,4 @@ def makeUI():
 
 
 if __name__ == "__main__":
-    makeUI()
+    OVR_makeUI()
