@@ -44,8 +44,6 @@ I hope it will help someone else to create a tool.
 #### kz_globalVerReader.py
 https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-becb-478848049457.mp4
 
-
-
 [jp]
 
 ##### グローバル変数の一覧作成および削除ツール
@@ -73,3 +71,40 @@ When I want to search, I have to open mel, find the variable name, and print it 
 
 Searching for information, study, etc.
 I would be happy if I can help someone to create a tool.
+
+---
+
+#### kz_globalVerReader.py
+https://github.com/kazinos/kz_MayaTools/assets/55563757/15c31c0b-7ac9-4922-b24e-b7ef6c5f132f
+
+[jp]
+
+##### joint確認・表示変更ツール
+
+jointのデータ確認の効率化の為に作成しました。
+細かい機能をまとめて１つのツールにしました。
+出来る事は下記の通りです。
+・jointのTranlate,Rotate,Scaleの表示（桁数変更機能付き）
+・ラベルの表示・非表示
+・軸方向の表示・非表示
+・jointの半径　一括変更
+・jointの色の変更
+・jointのアウトライナー上の色変更
+
+誰かの作業の手伝いになれば幸いです。
+
+[en]
+
+##### global variable listing tool
+
+This tool was created to improve the efficiency of data confirmation for JOINT.
+We have combined detailed functions into a single tool.
+The following functions are available.
+・Display of joint's Tranlate, Rotate, and Scale (with a function to change the number of digits)
+・Display/hide labels
+・Display/Hide axis direction
+・Change the radius of joints at once.
+・Change the color of joints.
+・Change the color of joints in the outliner.
+
+I would be happy to help someone else's work.
