@@ -44,8 +44,6 @@ I hope it will help someone else to create a tool.
 #### kz_globalVerReader.py
 https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-becb-478848049457.mp4
 
-
-
 [jp]
 
 ##### グローバル変数の一覧作成および削除ツール
@@ -74,10 +72,10 @@ When I want to search, I have to open mel, find the variable name, and print it 
 Searching for information, study, etc.
 I would be happy if I can help someone to create a tool.
 
+---
 
 #### kz_globalVerReader.py
 https://github.com/kazinos/kz_MayaTools/assets/55563757/15c31c0b-7ac9-4922-b24e-b7ef6c5f132f
-
 
 [jp]
 
