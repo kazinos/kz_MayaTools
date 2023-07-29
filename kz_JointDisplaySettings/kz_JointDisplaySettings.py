@@ -18,7 +18,8 @@ from maya import cmds
 from maya.common.ui import LayoutManager
 
 
-def JDS_setJointTRS(unit=3):
+def JDS_setJointTRS():
+    unit = cmds.intField("unitNum", q=True, v=True)
     selobj = cmds.ls(sl=True, type="joint")
     objTranslate = [0, 0, 0]
     objRotate = [0, 0, 0]
@@ -191,10 +192,10 @@ def JDS_makeUI():
         with LayoutManager(cmds.rowLayout(nc=8, adj=8)):
             cmds.text("unit", w=trsTitle_w)
             cmds.intField("unitNum", w=trsFloatFld_w, v=3,
-                          cc=lambda *args: JDS_setJointTRS(unit=cmds.intField("unitNum", q=True, v=True)))
+                          cc=lambda *args: JDS_setJointTRS())
 
         with LayoutManager(cmds.rowLayout(nc=8, adj=8)):
-            cmds.text("transform", w=trsTitle_w)
+            cmds.text("translate", w=trsTitle_w)
             cmds.text("X")
             cmds.floatField("view_tx", w=trsFloatFld_w)
             cmds.text("Y")
