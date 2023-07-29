@@ -76,15 +76,12 @@ I would be happy if I can help someone to create a tool.
 
 
 #### kz_globalVerReader.py
-https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-becb-478848049457.mp4
-
+https://github.com/kazinos/kz_MayaTools/assets/55563757/15c31c0b-7ac9-4922-b24e-b7ef6c5f132f
 
 
 [jp]
 
 ##### joint確認・表示変更ツール
-https://github.com/kazinos/kz_MayaTools/assets/55563757/f10f209f-a100-4428-86ba-2b3be651b2c6
-
 
 jointのデータ確認の効率化の為に作成しました。
 細かい機能をまとめて１つのツールにしました。
