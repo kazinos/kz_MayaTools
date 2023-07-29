@@ -50,9 +50,13 @@ https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-
 
 ツール作成の効率化の為に作成しました。
 以外に何が保存されているのか把握しきれていないグローバル変数の中身が気になり制作しました。
+
 ・ウインドウの名前
+
 ・プリファレンスの設定値
+
 ・各種項目のステータス　等
+
 探そうと思うとmelを開いて変数名を探し出してプリントして…と手間ですが、欲しい情報を検索すれば検索の時短になるかと思います。
 
 情報の検索、勉強のお供など、
@@ -64,9 +68,13 @@ https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-
 
 Created to improve the efficiency of tool creation.
 I created it because I was concerned about the contents of global variables, which I could not fully grasp what is stored in other than the following.
+
 Window name
+
 Preference values
+
 The status of various items, etc.
+
 When I want to search, I have to open mel, find the variable name, and print it out... It is time-consuming, but if I search for the information I want, I think it will shorten the time for searching.
 
 Searching for information, study, etc.
@@ -85,10 +93,15 @@ jointのデータ確認の効率化の為に作成しました。
 細かい機能をまとめて１つのツールにしました。
 出来る事は下記の通りです。
 ・jointのTranlate,Rotate,Scaleの表示（桁数変更機能付き）
+
 ・ラベルの表示・非表示
+
 ・軸方向の表示・非表示
+
 ・jointの半径　一括変更
+
 ・jointの色の変更
+
 ・jointのアウトライナー上の色変更
 
 誰かの作業の手伝いになれば幸いです。
@@ -101,10 +114,15 @@ This tool was created to improve the efficiency of data confirmation for JOINT.
 We have combined detailed functions into a single tool.
 The following functions are available.
 ・Display of joint's Tranlate, Rotate, and Scale (with a function to change the number of digits)
+
 ・Display/hide labels
+
 ・Display/Hide axis direction
+
 ・Change the radius of joints at once.
+
 ・Change the color of joints.
+
 ・Change the color of joints in the outliner.
 
 I would be happy to help someone else's work.
