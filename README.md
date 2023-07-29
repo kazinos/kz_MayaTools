@@ -83,6 +83,8 @@ https://user-images.githubusercontent.com/55563757/196215859-5ab71705-c5c3-4246-
 [jp]
 
 ##### joint確認・表示変更ツール
+https://github.com/kazinos/kz_MayaTools/assets/55563757/f10f209f-a100-4428-86ba-2b3be651b2c6
+
 
 jointのデータ確認の効率化の為に作成しました。
 細かい機能をまとめて１つのツールにしました。
