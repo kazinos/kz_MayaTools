@@ -97,8 +97,9 @@ def CCS_SelectionChangedCommand():
     # アトリビュートの取得
     extraAttrs = cmds.listAttr(selobj[0], userDefined=True)
     defaultAttrs = cmds.listAttr(selobj[0])
+    defaultAttrs = cmds.sortCaseInsensitive(list(set(defaultAttrs) - set(baseAttrList)))
     if extraAttrs:
-        defaultAttrs = cmds.sortCaseInsensitive(list(set(defaultAttrs) - set(extraAttrs) - set(baseAttrList)))
+        defaultAttrs = cmds.sortCaseInsensitive(list(set(defaultAttrs) - set(extraAttrs)))
 
     # 正常に取得できないアトリビュートは除外対象とする
     ignoreList = ["message", "TdataCompound", "rotationInterpolation", "publishedNodeInfo"]
