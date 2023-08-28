@@ -82,7 +82,7 @@ I would be happy if I can help someone to create a tool.
 
 ---
 
-#### kz_globalVerReader.py
+#### kz_JointDisplaySettings.py
 https://github.com/kazinos/kz_MayaTools/assets/55563757/15c31c0b-7ac9-4922-b24e-b7ef6c5f132f
 
 [jp]
@@ -126,3 +126,50 @@ The following functions are available.
 ・Change the color of joints in the outliner.
 
 I would be happy to help someone else's work.
+
+---
+
+#### kz_channelControlSetting.py
+https://github.com/kazinos/kz_MayaTools/assets/55563757/78907a6e-ecd3-40e6-98a8-1c88b4fece7b
+
+
+[jp]
+
+##### アトリビュート編集ツール
+
+Maya標準のChannel Controlの表示を変更しcheckboxで変更できるようにしたものです。
+
+checkBox、Keyableの項目いずれかにチェックが入っていればチャネルボックスに表示されます。
+
+アトリビュート表示部分は上から順に
+
+・標準でチャネルボックスに表示されているもの
+
+・標準で実装されているアトリビュート
+
+・追加アトリビュート
+
+となっており、２段目、３段目はアルファベット順に並び替えています。
+
+誰かの作業の手伝いになれば幸いです。
+
+[en]
+
+##### Attribute Editing Tool
+
+This tool changes the display of Maya's standard Channel Control so that it can be changed in the checkbox.
+
+If either the checkbox or keyable item is checked, it will be displayed in the channel box.
+
+The attributes are displayed in the following order from the top to the bottom
+
+・The attributes that are displayed in the standard channel box.
+
+・Attributes that are implemented by default
+
+・Extra attributes
+
+and the second and third rows are sorted alphabetically.
+
+I hope this helps someone's work.
+
