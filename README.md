@@ -173,3 +173,93 @@ and the second and third rows are sorted alphabetically.
 
 I hope this helps someone's work.
 
+
+---
+
+#### kz_channelControlSetting.py
+https://github.com/kazinos/kz_MayaTools/assets/55563757/78907a6e-ecd3-40e6-98a8-1c88b4fece7b
+
+
+[jp]
+
+##### アトリビュート編集ツール
+
+Maya標準のChannel Controlの表示を変更しcheckboxで変更できるようにしたものです。
+
+checkBox、Keyableの項目いずれかにチェックが入っていればチャネルボックスに表示されます。
+
+アトリビュート表示部分は上から順に
+
+・標準でチャネルボックスに表示されているもの
+
+・標準で実装されているアトリビュート
+
+・追加アトリビュート
+
+となっており、２段目、３段目はアルファベット順に並び替えています。
+
+誰かの作業の手伝いになれば幸いです。
+
+[en]
+
+##### Attribute Editing Tool
+
+This tool changes the display of Maya's standard Channel Control so that it can be changed in the checkbox.
+
+If either the checkbox or keyable item is checked, it will be displayed in the channel box.
+
+The attributes are displayed in the following order from the top to the bottom
+
+・The attributes that are displayed in the standard channel box.
+
+・Attributes that are implemented by default
+
+・Extra attributes
+
+and the second and third rows are sorted alphabetically.
+
+I hope this helps someone's work.
+
+---
+
+#### kz_RadialjointOrient.py
+
+
+https://github.com/kazinos/kz_MayaTools/assets/55563757/3e45047b-1a14-464c-b41d-fef52a98246d
+
+
+[jp]
+
+##### 放射状にjointOrientを設定するツール
+
+secondary軸が基準点を向くようにjointOrientを設定してくれるツールです。
+
+スカートなどの放射状に配置されているjointの軸を設定するのに役に立ちます。
+
+基準点は任意の場所に移動してください。
+
+計算内容は、内積と外積を使って回転角を算出し、jointを回転
+
+その後にフリーズを行っています。
+
+既にスキニングされているjointの場合は、バインドを解除してから使用してください。
+
+誰かの作業の手伝いになれば幸いです。
+
+[en]
+
+##### A tool that sets the jointOrient radially
+
+This tool sets the jointOrient so that the secondary axis points to the reference point.
+
+This tool is useful for setting the axes of radially placed joints such as skirts.
+
+The reference point can be moved to any location.
+
+The calculation uses the dot product and cross product to calculate the rotation angle, rotate the joint
+
+Freeze is then performed.
+
+If the joint has already been skinned, unbind it before use.
+
+I hope this helps someone's work.
