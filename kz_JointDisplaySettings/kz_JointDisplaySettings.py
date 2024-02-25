@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """kz_jointDisplaySettings.py
 
 git:https://github.com/kazinos/kz_MayaTools.git
@@ -8,6 +8,7 @@ MayaVer Maya2020.4
 2023/07/23 kazinos 制作開始
 2023/07/27 kazinos formLayout開閉時のWindowサイズ変更処理の実装
 2023/07/29 kazinos 選択されているjointのTRS値を桁数を指定して表示する機能の実装
+2024/02/25 kazinos Bom(U+FEFF)の削除
 
 issue:
 outlinerColor count変更時のWindowリサイズ処理
