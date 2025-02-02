@@ -47,7 +47,10 @@ def SAV_makeList():
 
 def SAV_selectListItem():
     selAttrName = cmds.textScrollList("SAV_attrList",q=True,si=True)
+    selAttrType=""
     selAttrValue = "None"
+    if selAttrName == "Please make a list":
+        return
     if cmds.getAttr(selAttrName,type=True) == "message":
         selAttrType = "message"
         selAttrValue = "None"
@@ -58,8 +61,7 @@ def SAV_selectListItem():
         selAttrValue = ""
         if not selAttrType in ["double3","double4","float3","float2","TdataCompound"]:
             selAttrValue = cmds.getAttr(selAttrName)
-        print(selAttrType)
-        print(selAttrValue)
+
     cmds.textField("SAV_dataTypeFld",e=True,tx=selAttrType)
     cmds.textScrollList("SAV_valueList", e=True, ra=True,append=selAttrValue)
 
