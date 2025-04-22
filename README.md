@@ -90,8 +90,8 @@ https://github.com/kazinos/kz_MayaTools/assets/55563757/15c31c0b-7ac9-4922-b24e-
 ##### joint確認・表示変更ツール
 
 jointのデータ確認の効率化の為に作成しました。
-細かい機能をまとめて１つのツールにしました。
-出来る事は下記の通りです。
+細かい機能をまとめて1つのツールにしました。
+できる事は下記の通りです。
 ・jointのTranlate,Rotate,Scaleの表示（桁数変更機能付き）
 
 ・ラベルの表示・非表示
@@ -149,7 +149,7 @@ checkBox、Keyableの項目いずれかにチェックが入っていればチ�
 
 ・追加アトリビュート
 
-となっており、２段目、３段目はアルファベット順に並び替えています。
+となっており、2段目、3段目はアルファベット順に並び替えています。
 
 誰かの作業の手伝いになれば幸いです。
 
@@ -176,51 +176,6 @@ I hope this helps someone's work.
 
 ---
 
-#### kz_channelControlSetting.py
-https://github.com/kazinos/kz_MayaTools/assets/55563757/78907a6e-ecd3-40e6-98a8-1c88b4fece7b
-
-
-[jp]
-
-##### アトリビュート編集ツール
-
-Maya標準のChannel Controlの表示を変更しcheckboxで変更できるようにしたものです。
-
-checkBox、Keyableの項目いずれかにチェックが入っていればチャネルボックスに表示されます。
-
-アトリビュート表示部分は上から順に
-
-・標準でチャネルボックスに表示されているもの
-
-・標準で実装されているアトリビュート
-
-・追加アトリビュート
-
-となっており、２段目、３段目はアルファベット順に並び替えています。
-
-誰かの作業の手伝いになれば幸いです。
-
-[en]
-
-##### Attribute Editing Tool
-
-This tool changes the display of Maya's standard Channel Control so that it can be changed in the checkbox.
-
-If either the checkbox or keyable item is checked, it will be displayed in the channel box.
-
-The attributes are displayed in the following order from the top to the bottom
-
-・The attributes that are displayed in the standard channel box.
-
-・Attributes that are implemented by default
-
-・Extra attributes
-
-and the second and third rows are sorted alphabetically.
-
-I hope this helps someone's work.
-
----
 
 #### kz_RadialjointOrient.py
 
@@ -242,7 +197,7 @@ secondary軸が基準点を向くようにjointOrientを設定してくれるツ
 
 その後にフリーズを行っています。
 
-既にスキニングされているjointの場合は、バインドを解除してから使用してください。
+すでにスキニングされているjointの場合は、バインドを解除してから使用してください。
 
 誰かの作業の手伝いになれば幸いです。
 
