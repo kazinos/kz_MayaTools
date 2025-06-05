@@ -5,7 +5,8 @@ git:https://github.com/kazinos/kz_MayaTools.git
 
 coding by kazinos
 MayaVer Maya2020.4
-2023/08/29 v1.0 kz_channelControlSettingの作成
+2023/08/29 v1.0.0 kz_channelControlSettingの作成
+2024/06/05 v1.0.1 Tipsの誤字修正、不要なプリント処理の削除
 
 issue:
 
@@ -29,9 +30,9 @@ def CCS_changeAttr(ctrlName="", AttrName="", changeGroup=""):
     UI display changes at the same time
 
     Args:
-        ctrlName (str, optional): Name of the control to be changed. Defaults to "".
-        AttrName (str, optional): Name of the attribute to be changed. Defaults to "".
-        changeGroup (str, optional): Name of the group to be changed.Choose one of "base" "default" or "extra". Defaults to "".
+        ctrlName (str, optional): 変更するコントロールの名。 Defaults to "".
+        AttrName (str, optional): 変更するアトリビュート名 Defaults to "".
+        changeGroup (str, optional): 変更するグループ名 "base","default","extra" のいずれかを選択する。 Defaults to "".
     """
     # ctrlNameからどのパネルの項目が選択されたか判断
     index = ctrlName.split("_")[-1]
@@ -56,9 +57,9 @@ def CCS_changeAttr(ctrlName="", AttrName="", changeGroup=""):
 
 
 def CCS_SelectionChangedCommand():
-    """Processing when object selection is changed
+    """オブジェクトの選択が変更されたときの処理
 
-    Retrieve attributes of selected objects and reconstruct UI
+    選択したオブジェクトの属性を取得し、UIを再構築します。
     """
     label_w = 100
     checkBox_w = 40
@@ -148,7 +149,7 @@ def CCS_SelectionChangedCommand():
                 cmds.checkBox("defaultLock_{}".format(i), l=" ", value=isLock, w=checkBox_w,
                               cc="CCS_changeAttr('extraLock_{}', '{}.{}', 'lock')".format(i, selobj[0], attr))
 
-    # 追加アトリビュート更新部
+    # 追加アトリビュート更新処理
     with LayoutManager(cmds.columnLayout(extraColumnName, e=True, parent=extraScrollName)):
         # 追加アトリビュートが存在しなかった場合のUI作成　選択更新時、deleteUIをする都合上何かしら作成する必要がある
         if not extraAttrs:
@@ -177,9 +178,8 @@ def CCS_SelectionChangedCommand():
 
 
 # UI設定----------------------------------------------
-def callAttrSettingWindow(callType=1):
+def CCS_callAttrSettingWindow(callType=1):
     mel.eval("AttributeEditor;")
-    print("callType =", callType)
     if callType == 1:
         mel.eval("showAddAttrWin")
     if callType == 2:
@@ -189,16 +189,16 @@ def callAttrSettingWindow(callType=1):
 
 
 def CCS_getUIName():
-    """Methods for managing UI names and values
+    """UI名と値を管理するメソッド
 
-    Returns:
-        str: Base ScrollLayout Name
-        str: Base ColimnLayout Name
-        str: default ScrollLayout Name
-        str: default ColimnLayout Name
-        str: extra ScrollLayout Name
-        str: extra ColimnLayout Name
-        str[]: Attribute Name List for show in Base ScrollLayout
+    return：
+        str：baseScrollLayout名
+        str：baseColumnNameLayout名
+        str：defaultScrollNameLayout名
+        str：defaultColumnNameLayout名
+        str：extraScrollLayout名
+        str：extraColumnLayout名
+        str []：str：baseScrollLayoutの表示するアトリビュート名リスト
 
     """
     baseScrollName = "CCS_baseAttrListScroll"
@@ -215,10 +215,9 @@ def CCS_getUIName():
 
 
 def CCS_makeUI():
-    """Create main UI
-    """
+    """main UI"""
     winName = "CCS_win"
-    _version = "1.0"
+    _version = "1.0.1"
     label_w = 100
     checkBox_w = 40
     baseScrollName, baseColumnName, defaultScrollName, defaultColumnName, extraScrollName, extraColumnName, baseAttrList = CCS_getUIName()
@@ -271,12 +270,12 @@ def CCS_makeUI():
 
     # 標準機能呼び出しボタン
     with LayoutManager(cmds.rowLayout("CCS_showBtnLayout", numberOfColumns=3, adj=1)):
-        cmds.button("CCS_showAddAttrWindowBtn", l="Add Attr", w=88, c=lambda *args: callAttrSettingWindow(callType=1))
-        cmds.button("CCS_showDeleteAttrWindowBtn", l="Delete Attr", w=88, c=lambda *args: callAttrSettingWindow(callType=2))
-        cmds.button("CCS_showEditAttrWindowBtn", l="Edit Attr", w=88, c=lambda *args: callAttrSettingWindow(callType=3))
+        cmds.button("CCS_showAddAttrWindowBtn", l="Add Attr", w=88, c=lambda *args: CCS_callAttrSettingWindow(callType=1))
+        cmds.button("CCS_showDeleteAttrWindowBtn", l="Delete Attr", w=88, c=lambda *args: CCS_callAttrSettingWindow(callType=2))
+        cmds.button("CCS_showEditAttrWindowBtn", l="Edit Attr", w=88, c=lambda *args: CCS_callAttrSettingWindow(callType=3))
 
     # Tipsの表示
-    cmds.text("Tipstext", l="Tips:Uncheck the Channel box and Kyeable to hide it")
+    cmds.text("Tipstext", l="Tips:Uncheck the Channel box and Keyable to hide it")
 
     # 基準点と配置の設定
     cmds.formLayout("CCS_form", e=True,
