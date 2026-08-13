@@ -279,7 +279,7 @@ def JDS_makeUI():
                 cmds.text(l="")  # 調整用
 
         # DrawStyleの設定
-        with LayoutManager(cmds.frameLayout("JDS_FrameLayout6", l=u"Joint Draw Style", cll=True, cl=False, mw=20,
+        with LayoutManager(cmds.frameLayout("JDS_FrameLayout6", l=u"Joint Draw Style", cll=True, cl=True, mw=20,
                                             cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout6"))):
             with LayoutManager(cmds.rowLayout(nc=6, adj=6)):
                 cmds.text(l="select", al="left", w=btn_w/2)
@@ -302,7 +302,6 @@ def JDS_makeUI():
                 cmds.button(l="Box",   w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 1))
                 cmds.button(l="None",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 2))
                 cmds.text(l="")  # 調整用
-
 
         # jointColorの設定
         with LayoutManager(cmds.frameLayout("JDS_FrameLayout4", l=u"Joint Color", cll=True, cl=True, mw=20,
