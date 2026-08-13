@@ -9,6 +9,7 @@ MayaVer Maya2020.4
 2023/07/27 kazinos formLayout開閉時のWindowサイズ変更処理の実装
 2023/07/29 kazinos 選択されているjointのTRS値を桁数を指定して表示する機能の実装
 2024/02/25 kazinos Bom(U+FEFF)の削除
+2026/08/13 kazinos Joint Draw Styleの設定機能の実装
 
 issue:
 outlinerColor count変更時のWindowリサイズ処理
@@ -41,15 +42,6 @@ def JDS_setJointTRS():
     cmds.floatField("view_sz", e=True, pre=unit, v=objScale[2])
 
 
-def JDS_showJointLabel(target=[], setBool=False):
-    # エラー回避処理
-    if not target:
-        cmds.inViewMessage(amg='<hl>Please select joint</hl>', fts=20, pos='midCenter', fade=True)
-    # 設定
-    for jnt in target:
-        cmds.setAttr("{}.drawLabel".format(jnt), setBool)
-
-
 def JDS_showAxis(target=[], setBool=False):
     # エラー回避処理
     if not target:
@@ -57,6 +49,15 @@ def JDS_showAxis(target=[], setBool=False):
     # 設定
     for jnt in target:
         cmds.setAttr("{}.displayLocalAxis".format(jnt), setBool)
+
+
+def JDS_showJointLabel(target=[], setBool=False):
+    # エラー回避処理
+    if not target:
+        cmds.inViewMessage(amg='<hl>Please select joint</hl>', fts=20, pos='midCenter', fade=True)
+    # 設定
+    for jnt in target:
+        cmds.setAttr("{}.drawLabel".format(jnt), setBool)
 
 
 def JDS_setJointColor(target=[], rgb=[0, 0, 0], setBool=False):
@@ -86,10 +87,18 @@ def JDS_setJointRadius(target=[], setValue=0.5):
     # エラー回避処理
     if not target:
         cmds.inViewMessage(amg='<hl>Please select joint</hl>', fts=20, pos='midCenter', fade=True)
-
     # 設定
     for jnt in target:
         cmds.setAttr("{}.radius".format(jnt), setValue)
+
+
+def JDS_setJointDrawStyle(target=[], setValue=0):
+    # エラー回避処理
+    if not target:
+        cmds.inViewMessage(amg='<hl>Please select joint</hl>', fts=20, pos='midCenter', fade=True)
+    # 設定
+    for jnt in target:
+        cmds.setAttr("{}.drawStyle".format(jnt), setValue)
 
 
 def JDS_setJointOutlinerColor(setBool=False):
@@ -196,7 +205,7 @@ def JDS_makeUI():
                           cc=lambda *args: JDS_setJointTRS())
 
         with LayoutManager(cmds.rowLayout(nc=8, adj=8)):
-            cmds.text("translate", w=trsTitle_w)
+            cmds.text("Translate", w=trsTitle_w)
             cmds.text("X")
             cmds.floatField("view_tx", w=trsFloatFld_w)
             cmds.text("Y")
@@ -205,7 +214,7 @@ def JDS_makeUI():
             cmds.floatField("view_tz", w=trsFloatFld_w)
             cmds.text("")
         with LayoutManager(cmds.rowLayout(nc=8, adj=8)):
-            cmds.text("rotate", w=trsTitle_w)
+            cmds.text("Rotate", w=trsTitle_w)
             cmds.text("X")
             cmds.floatField("view_rx", w=trsFloatFld_w)
             cmds.text("Y")
@@ -223,6 +232,22 @@ def JDS_makeUI():
             cmds.floatField("view_sz", w=trsFloatFld_w)
             cmds.text("")
 
+        # 軸の表示・非表示
+        with LayoutManager(cmds.frameLayout("JDS_FrameLayout2", l=u"Axis Display", cll=True, cl=False, mw=20,
+                                            cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout2"))):
+            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
+                cmds.button(l="Select ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, typ="joint"), True))
+                cmds.button(l="Select OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, typ="joint"), False))
+                cmds.text(l="")  # 調整用
+            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
+                cmds.button(l="Hierarchy ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, dag=True, typ="joint"), True))
+                cmds.button(l="Hierarchy OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, dag=True, typ="joint"), False))
+                cmds.text(l="")  # 調整用
+            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
+                cmds.button(l="All ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(typ="joint"), True))
+                cmds.button(l="All OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(typ="joint"), False))
+                cmds.text(l="")  # 調整用
+
         # labelの表示・非表示
         with LayoutManager(cmds.frameLayout("JDS_FrameLayout1", l=u"Label Display", cll=True, cl=True, mw=20,
                                             cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout1"))):
@@ -239,35 +264,45 @@ def JDS_makeUI():
                 cmds.button(l="All OFF", w=btn_w, c=lambda *args: JDS_showJointLabel(cmds.ls(typ="joint"), False))
                 cmds.text(l="")  # 調整用
 
-        # 軸の表示・非表示
-        with LayoutManager(cmds.frameLayout("JDS_FrameLayout2", l=u"Axis Display", cll=True, cl=True, mw=20,
-                                            cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout2"))):
-            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
-                cmds.button(l="Select ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, typ="joint"), True))
-                cmds.button(l="Select OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, typ="joint"), False))
-                cmds.text(l="")  # 調整用
-            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
-                cmds.button(l="Hierarchy ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, dag=True, typ="joint"), True))
-                cmds.button(l="Hierarchy OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(sl=True, dag=True, typ="joint"), False))
-                cmds.text(l="")  # 調整用
-            with LayoutManager(cmds.rowLayout(nc=3, adj=3)):
-                cmds.button(l="All ON", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(typ="joint"), True))
-                cmds.button(l="All OFF", w=btn_w, c=lambda *args: JDS_showAxis(cmds.ls(typ="joint"), False))
-                cmds.text(l="")  # 調整用
-
         # jointRadiusの設定
         with LayoutManager(cmds.frameLayout("JDS_FrameLayout3", l=u"Joint Radius", cll=True, cl=True, mw=20,
                                             cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout3"))):
             with LayoutManager(cmds.rowLayout(nc=1, adj=1)):
                 cmds.floatField("JDS_radiusfloat", value=0.5)
             with LayoutManager(cmds.rowLayout(nc=4, adj=4)):
-                cmds.button(l="Select", w=btn_w * 0.66, c=lambda *args: JDS_setJointRadius(cmds.ls(sl=True, type="joint"),
-                                                                                           cmds.floatField("JDS_radiusfloat", q=True, value=True)))
-                cmds.button(l="Hierarchy", w=btn_w * 0.66, c=lambda *args: JDS_setJointRadius(cmds.ls(sl=True, dag=True, type="joint"),
-                                                                                              cmds.floatField("JDS_radiusfloat", q=True, value=True)))
-                cmds.button(l="ALL", w=btn_w * 0.66, c=lambda *args: JDS_setJointRadius(cmds.ls(type="joint"),
-                                                                                        cmds.floatField("JDS_radiusfloat", q=True, value=True)))
+                cmds.button(l="Select", w=btn_w * 0.66,
+                            c=lambda *args: JDS_setJointRadius(cmds.ls(sl=True, type="joint"),cmds.floatField("JDS_radiusfloat", q=True, value=True)))
+                cmds.button(l="Hierarchy", w=btn_w * 0.66,
+                            c=lambda *args: JDS_setJointRadius(cmds.ls(sl=True, dag=True, type="joint"),cmds.floatField("JDS_radiusfloat", q=True, value=True)))
+                cmds.button(l="ALL", w=btn_w * 0.66,
+                            c=lambda *args: JDS_setJointRadius(cmds.ls(type="joint"),cmds.floatField("JDS_radiusfloat", q=True, value=True)))
                 cmds.text(l="")  # 調整用
+
+        # DrawStyleの設定
+        with LayoutManager(cmds.frameLayout("JDS_FrameLayout6", l=u"Joint Draw Style", cll=True, cl=False, mw=20,
+                                            cc=lambda *args: resizeUIHight(winName, "JDS_FrameLayout6"))):
+            with LayoutManager(cmds.rowLayout(nc=6, adj=6)):
+                cmds.text(l="select", al="left", w=btn_w/2)
+                cmds.button(l="Bone",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, typ="joint"), 0))
+                cmds.button(l="Joint", w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, typ="joint"), 3))
+                cmds.button(l="Box",   w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, typ="joint"), 1))
+                cmds.button(l="None",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, typ="joint"), 2))
+                cmds.text(l="")  # 調整用
+            with LayoutManager(cmds.rowLayout(nc=6, adj=6)):
+                cmds.text(l="Hierarchy", al="left", w=btn_w/2)
+                cmds.button(l="Bone",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, dag=True, typ="joint"), 0))
+                cmds.button(l="Joint", w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, dag=True, typ="joint"), 3))
+                cmds.button(l="Box",   w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, dag=True, typ="joint"), 1))
+                cmds.button(l="None",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(sl=True, dag=True, typ="joint"), 2))
+                cmds.text(l="")  # 調整用 dag=True,
+            with LayoutManager(cmds.rowLayout(nc=6, adj=6)):
+                cmds.text(l="All", al="left", w=btn_w/2)
+                cmds.button(l="Bone",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 0))
+                cmds.button(l="Joint", w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 3))
+                cmds.button(l="Box",   w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 1))
+                cmds.button(l="None",  w=btn_w/2, c=lambda *args: JDS_setJointDrawStyle(cmds.ls(typ="joint"), 2))
+                cmds.text(l="")  # 調整用
+
 
         # jointColorの設定
         with LayoutManager(cmds.frameLayout("JDS_FrameLayout4", l=u"Joint Color", cll=True, cl=True, mw=20,
@@ -275,13 +310,10 @@ def JDS_makeUI():
             with LayoutManager(cmds.rowLayout(nc=1, adj=1)):
                 cmds.colorSliderGrp("JDS_jointColor", rgb=(0, 0, 0))
             with LayoutManager(cmds.rowLayout(nc=4, adj=4)):
-                cmds.button(l="Set", w=btn_w * 0.66, c=lambda *args: JDS_setJointColor(cmds.ls(sl=True, type="joint"),
-                                                                                       cmds.colorSliderGrp("JDS_jointColor", q=True, rgb=True),
-                                                                                       setBool=True))
-                cmds.button(l="Reset", w=btn_w * 0.66, c=lambda *args: JDS_setJointColor(cmds.ls(sl=True, dag=True, type="joint"),
-                                                                                         setBool=False))
-                cmds.button(l="ALL Reset", w=btn_w * 0.66, c=lambda *args: JDS_setJointColor(cmds.ls(type="joint"),
-                                                                                             setBool=False))
+                cmds.button(l="Set", w=btn_w * 0.66,
+                            c=lambda *args: JDS_setJointColor(cmds.ls(sl=True, type="joint"),cmds.colorSliderGrp("JDS_jointColor", q=True, rgb=True),setBool=True))
+                cmds.button(l="Reset", w=btn_w * 0.66, c=lambda *args: JDS_setJointColor(cmds.ls(sl=True, dag=True, type="joint"),setBool=False))
+                cmds.button(l="ALL Reset", w=btn_w * 0.66, c=lambda *args: JDS_setJointColor(cmds.ls(type="joint"),setBool=False))
                 cmds.text(l="")  # 調整用
 
         # outlinerColorの設定
