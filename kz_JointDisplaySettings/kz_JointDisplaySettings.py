@@ -342,3 +342,27 @@ def JDS_makeUI():
 
 if __name__ == "__main__":
     JDS_makeUI()
+
+""" sample
+import maya.cmds as cmds
+
+colors = []
+for i in range(1, 9):
+    colorName = "userDefined{}".format(i)
+    rgb = cmds.displayRGBColor(colorName, query=True)
+    colors.append(rgb)
+
+cmds.window()
+cmds.frameLayout(labelVisible=0)
+
+# create a palette of 20 columns and 15 rows
+hoge = cmds.palettePort( 'myPalette', dimensions=(8, 1) )
+
+for i,rgb in enumerate(colors):
+    # select cell #30
+    cmds.palettePort( 'myPalette', edit=True ,rgb=(i,*rgb),
+                cc=lambda *args:print(cmds.palettePort('myPalette',q=True,setCurCell=True)))
+    
+
+cmds.showWindow()
+"""
